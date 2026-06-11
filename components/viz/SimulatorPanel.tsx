@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const SCENARIOS = [
   {
-    key: "night_intrusion", label: "Night Intrusion", icon: Activity, accent: "#fb7a2c",
+    key: "night_intrusion", label: "Night Intrusion", icon: Activity, accent: "#f0673a",
     frames: [
       { darkness: 0.85 },
       { motion: true, darkness: 0.85 },
@@ -16,7 +16,7 @@ const SCENARIOS = [
     ], gap: 850,
   },
   {
-    key: "tampering", label: "Tampering", icon: Hammer, accent: "#f9b21a",
+    key: "tampering", label: "Tampering", icon: Hammer, accent: "#f59e0b",
     frames: [
       { vibration: true, sound: 0.6, darkness: 0.7 },
       { vibration: true, sound: 0.72, darkness: 0.7 },
@@ -24,11 +24,11 @@ const SCENARIOS = [
     ], gap: 850,
   },
   {
-    key: "fire_hazard", label: "Fire Hazard", icon: Flame, accent: "#ec3f8f",
+    key: "fire_hazard", label: "Fire Hazard", icon: Flame, accent: "#e0245e",
     frames: [{ smoke: 0.5 }, { smoke: 0.82, sound: 0.5 }, { smoke: 0.96, motion: true }], gap: 850,
   },
   {
-    key: "multi_zone", label: "Multi-zone", icon: Network, accent: "#a78bfa", multi: true,
+    key: "multi_zone", label: "Multi-zone", icon: Network, accent: "#5b4dd6", multi: true,
     frames: [], gap: 0,
   },
 ];
@@ -79,7 +79,7 @@ export function SimulatorPanel() {
   return (
     <div className="space-y-5">
       <div>
-        <div className="stat-label mb-2.5">Attack Scenarios</div>
+        <div className="stat-label mb-2.5">Scenario Presets</div>
         <div className="grid grid-cols-2 gap-2">
           {SCENARIOS.map((s) => (
             <motion.button

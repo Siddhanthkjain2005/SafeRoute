@@ -19,13 +19,14 @@ import { TrendChart } from "@/components/viz/TrendChart";
 import { useForecast, useSensors, useTimeseries } from "@/lib/hooks";
 import { useLiveStore } from "@/lib/store";
 
-const SENSOR_COLORS = ["#5b8cff", "#f9b21a", "#ef4444", "#1fbf7e", "#a78bfa"];
+const SENSOR_COLORS = ["#5b4dd6", "#f59e0b", "#e0245e", "#25a575", "#9b7df0"];
 const TOOLTIP = {
-  background: "hsl(221 40% 9% / 0.96)",
-  border: "1px solid hsl(215 30% 60% / 0.18)",
+  background: "rgba(255,255,255,0.96)",
+  border: "1px solid rgba(100,116,160,0.18)",
   borderRadius: 12,
   fontSize: 12,
-  color: "#e2e8f0",
+  color: "#1b2240",
+  boxShadow: "0 12px 32px -12px rgba(40,50,90,0.35)",
 };
 
 export default function AnalyticsPage() {
@@ -52,11 +53,19 @@ export default function AnalyticsPage() {
   const dist = ["safe", "low", "medium", "high", "critical", "emergency"].map((lvl, i) => ({
     name: lvl,
     value: events.filter((e) => e.threat_level === lvl).length,
-    color: ["#1fbf7e", "#2f9ff0", "#f9b21a", "#fb7a2c", "#ef4444", "#ec3f8f"][i],
+    color: ["#25a575", "#0e95e6", "#f59e0b", "#f0673a", "#e0245e", "#dc2680"][i],
   })).filter((d) => d.value > 0);
 
   return (
     <Page>
+      <header className="mb-7">
+        <h1 className="text-2xl font-semibold tracking-tight text-content-strong">Analytics</h1>
+        <p className="mt-1 text-sm text-content-muted">
+          How environmental risk has trended across the network — historical patterns, sensor
+          activity, and a short-term forecast.
+        </p>
+      </header>
+
       <div className="grid gap-4 lg:grid-cols-12">
         <MotionCard delay={0.05} className="lg:col-span-8">
           <CardHeader title="Risk Time Series" subtitle="last 24 hours · max risk per bucket" />

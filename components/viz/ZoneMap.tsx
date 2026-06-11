@@ -46,7 +46,7 @@ export default function ZoneMap({ nodes }: { nodes: NodeInfo[] }) {
       style={{ height: "100%", width: "100%", borderRadius: 16 }}
       attributionControl={false}
     >
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+      <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
       <FitBounds nodes={nodes} />
       {nodes
         .filter((n) => n.latitude && n.longitude)

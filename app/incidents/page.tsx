@@ -32,6 +32,14 @@ export default function IncidentsPage() {
 
   return (
     <Page>
+      <header className="mb-7">
+        <h1 className="text-2xl font-semibold tracking-tight text-content-strong">Incidents</h1>
+        <p className="mt-1 text-sm text-content-muted">
+          Every safety alert the system has raised — triage, investigate, and resolve events as
+          they unfold across the network.
+        </p>
+      </header>
+
       <div className="grid gap-4 lg:grid-cols-5">
         {/* List */}
         <MotionCard delay={0.05} className="lg:col-span-2">

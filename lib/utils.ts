@@ -46,11 +46,9 @@ export function levelFromScore(score: number): ThreatLevel {
 }
 
 export function fmtTime(iso: string): string {
-  try {
-    return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  } catch {
-    return iso;
-  }
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso; // pass through non-date labels (e.g. "+10m")
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 }
 
 export function fmtClock(iso: string): string {

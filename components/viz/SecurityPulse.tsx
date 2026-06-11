@@ -13,11 +13,11 @@ export function SecurityPulse({ height = 80 }: { height?: number }) {
   const pulse = useLiveStore((s) => s.pulse);
   const lastEvent = useLiveStore((s) => s.events[0]);
   const pulseRef = useRef(pulse);
-  const colorRef = useRef("#5b8cff");
+  const colorRef = useRef("#5b4dd6");
 
   useEffect(() => {
     pulseRef.current = pulse; // trigger a spike when this changes
-    colorRef.current = lastEvent ? threatMeta(lastEvent.threat_level).hex : "#5b8cff";
+    colorRef.current = lastEvent ? threatMeta(lastEvent.threat_level).hex : "#5b4dd6";
   }, [pulse, lastEvent]);
 
   useEffect(() => {
