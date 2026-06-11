@@ -101,6 +101,78 @@ class DemoEngine {
         event_count: Math.round(rnd(1, 6)),
       });
     }
+    this.seedAlerts();
+  }
+
+  /** A few realistic historical incidents so the Incidents page is populated on load. */
+  private seedAlerts() {
+    const seeds: Array<{
+      node: string; mins: number; category: Alert["category"]; priority: number;
+      risk: number; title: string; summary: string; sensors: string[];
+      status: Alert["status"]; correlated?: string[];
+    }> = [
+      {
+        node: "zone-b", mins: 14, category: "critical", priority: 1, risk: 78,
+        title: "Multi-sensor correlation on Cedar Underpass",
+        summary: "Cedar Underpass (Riverside) reported simultaneous motion, vibration and elevated noise in low visibility — risk score 78.",
+        sensors: ["motion", "vibration", "sound", "darkness"], status: "investigating", correlated: ["zone-d"],
+      },
+      {
+        node: "zone-d", mins: 47, category: "high", priority: 2, risk: 61,
+        title: "Movement detected on East Lot",
+        summary: "East Lot (Parking) detected sustained movement after midnight with poor lighting — risk score 61.",
+        sensors: ["motion", "darkness"], status: "open",
+      },
+      {
+        node: "zone-a", mins: 132, category: "medium", priority: 3, risk: 44,
+        title: "Elevated noise on Maple Walk",
+        summary: "Maple Walk (North Quad) recorded a short spike in ambient noise — risk score 44.",
+        sensors: ["sound"], status: "resolved",
+      },
+      {
+        node: "zone-c", mins: 268, category: "high", priority: 2, risk: 58,
+        title: "Smoke present near Library Court",
+        summary: "Library Court (Central) area-sentinel detected trace smoke; auto-escalated for review — risk score 58.",
+        sensors: ["smoke"], status: "resolved",
+      },
+    ];
+
+    for (const s of seeds) {
+      const node = this.nodes.find((n) => n.id === s.node);
+      const id = this.alertSeq++;
+      const created = now() - s.mins * 60_000;
+      this.alerts.push({
+        id,
+        node_id: s.node,
+        event_id: this.eventSeq++,
+        created_at: iso(created),
+        updated_at: iso(created + 60_000),
+        category: s.category,
+        priority: s.priority,
+        risk_score: s.risk,
+        title: s.title,
+        summary: s.summary,
+        sensors: s.sensors,
+        correlated_nodes: s.correlated ?? [],
+        status: s.status,
+        acknowledged: s.status !== "open",
+        resolved_at: s.status === "resolved" ? iso(created + 30 * 60_000) : null,
+      });
+      const tl: AlertDetail["timeline"] = [
+        { id: 1, ts: iso(created), kind: "created", message: "Alert raised by correlation engine", actor: "system" },
+      ];
+      if (s.status !== "open") {
+        tl.push({ id: 2, ts: iso(created + 90_000), kind: "acknowledged", message: "Acknowledged by operator", actor: "operator" });
+      }
+      if (s.status === "investigating") {
+        tl.push({ id: 3, ts: iso(created + 180_000), kind: "investigating", message: "Dispatched patrol to verify on site", actor: "operator" });
+      }
+      if (s.status === "resolved") {
+        tl.push({ id: 3, ts: iso(created + 30 * 60_000), kind: "resolved", message: "Cleared after on-site check — no threat found", actor: "operator" });
+      }
+      this.timeline[id] = tl;
+      if (node) void node;
+    }
   }
 
   /* ── pub/sub ──────────────────────────────────────────────────────── */
