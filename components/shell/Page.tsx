@@ -1,5 +1,5 @@
 export function Page({ children }: { children: React.ReactNode }) {
-  return <main className="mx-auto max-w-[1560px] px-5 py-6 lg:px-7">{children}</main>;
+  return <div className="mx-auto max-w-[1280px] px-5 py-8 lg:px-8 lg:py-10">{children}</div>;
 }
 
 export function SectionTitle({

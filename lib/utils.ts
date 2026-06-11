@@ -16,12 +16,12 @@ interface ThreatStyle {
 }
 
 export const THREAT_META: Record<ThreatLevel, ThreatStyle> = {
-  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/30", hex: "#1fbf7e", glow: "rgba(31,191,126,0.5)" },
-  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/30", hex: "#2f9ff0", glow: "rgba(47,159,240,0.5)" },
-  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/10", ring: "ring-threat-medium/30", hex: "#f9b21a", glow: "rgba(249,178,26,0.5)" },
-  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/10", ring: "ring-threat-high/30", hex: "#fb7a2c", glow: "rgba(251,122,44,0.5)" },
-  critical: { label: "Critical", text: "text-threat-critical", bg: "bg-threat-critical/15", ring: "ring-threat-critical/40", hex: "#ef4444", glow: "rgba(239,68,68,0.55)" },
-  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/15", ring: "ring-threat-emergency/40", hex: "#ec3f8f", glow: "rgba(236,63,143,0.55)" },
+  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/25", hex: "#25a575", glow: "rgba(37,165,117,0.4)" },
+  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/25", hex: "#0e95e6", glow: "rgba(14,149,230,0.4)" },
+  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/12", ring: "ring-threat-medium/25", hex: "#f59e0b", glow: "rgba(245,158,11,0.4)" },
+  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/12", ring: "ring-threat-high/30", hex: "#f0673a", glow: "rgba(240,103,58,0.42)" },
+  critical: { label: "Critical", text: "text-threat-critical", bg: "bg-threat-critical/12", ring: "ring-threat-critical/30", hex: "#e0245e", glow: "rgba(224,36,94,0.45)" },
+  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/12", ring: "ring-threat-emergency/30", hex: "#dc2680", glow: "rgba(220,38,128,0.45)" },
 };
 
 export function threatMeta(level: ThreatLevel): ThreatStyle {
@@ -29,11 +29,12 @@ export function threatMeta(level: ThreatLevel): ThreatStyle {
 }
 
 export const ACCENT = {
-  blue: "#5b8cff",
-  cyan: "#22d3ee",
-  purple: "#a78bfa",
-  amber: "#f9b21a",
-  red: "#ef4444",
+  indigo: "#5b4dd6",
+  ocean: "#1390e8",
+  teal: "#1fae9b",
+  violet: "#9b7df0",
+  amber: "#f59e0b",
+  red: "#e0245e",
 };
 
 export function levelFromScore(score: number): ThreatLevel {
@@ -77,3 +78,43 @@ export const SENSOR_LABEL: Record<string, string> = {
   sound: "Sound",
   darkness: "Darkness",
 };
+
+/** Translate a 0–1 analog reading into human-friendly language per sensor.
+ *  Higher reading = worse condition, so we invert phrasing where it helps. */
+export function humanReading(key: string, value: number, on: boolean): string {
+  const v = Math.max(0, Math.min(1, value));
+  switch (key) {
+    case "motion":
+      return on ? "Detected" : "None";
+    case "vibration":
+      return on ? "Detected" : "None";
+    case "sound":
+      if (v < 0.2) return "Quiet";
+      if (v < 0.45) return "Low";
+      if (v < 0.7) return "Moderate";
+      return "Loud";
+    case "smoke":
+      if (v < 0.15) return "Clear";
+      if (v < 0.4) return "Trace";
+      if (v < 0.7) return "Elevated";
+      return "Heavy";
+    case "darkness":
+      // darkness high = poor visibility
+      if (v < 0.25) return "Excellent";
+      if (v < 0.5) return "Good";
+      if (v < 0.75) return "Limited";
+      return "Poor";
+    default:
+      return on ? "Active" : "Clear";
+  }
+}
+
+/** A short reassuring or cautioning sentence for a safety score. */
+export function safetyVerdict(score: number | null | undefined): string {
+  if (score == null) return "Awaiting live readings.";
+  if (score >= 80) return "Clear and well-lit. Comfortable to travel.";
+  if (score >= 60) return "Generally calm with minor activity.";
+  if (score >= 40) return "Some elevated readings. Stay aware.";
+  if (score >= 20) return "Notable activity detected. Consider the alternative.";
+  return "High risk right now. Avoid if possible.";
+}

@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CornerDownLeft, Search } from "lucide-react";
-import { NAV } from "./Sidebar";
+import { NAV } from "./Navbar";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/utils";
 

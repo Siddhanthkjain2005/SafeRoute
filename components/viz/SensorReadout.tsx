@@ -1,73 +1,51 @@
 "use client";
-import { Activity, Flame, Moon, Volume2, Waves } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Activity, Eye, Flame, Volume2, Waves } from "lucide-react";
+import { cn, humanReading } from "@/lib/utils";
 import type { SecurityEvent } from "@/lib/types";
 
-/** One sensor's live reading. Digital sensors (motion/vibration) show ON/OFF;
- *  analog sensors (smoke/sound/darkness) show a 0–100% magnitude bar. */
+/** One sensor's live reading expressed in human-friendly language.
+ *  Raw values stay hidden; we surface words like "Excellent" or "Low". */
 type Row = {
   key: string;
   label: string;
   icon: typeof Activity;
-  kind: "digital" | "analog";
   on: boolean;
-  value: number; // 0..1 for analog, 0/1 for digital
+  value: number; // 0..1
   tint: string;
 };
 
 function rows(ev: SecurityEvent | null): Row[] {
   const active = new Set(ev?.active_sensors ?? []);
   return [
-    { key: "motion", label: "Motion", icon: Activity, kind: "digital", on: !!ev?.motion, value: ev?.motion ? 1 : 0, tint: "#fb7a2c" },
-    { key: "vibration", label: "Vibration", icon: Waves, kind: "digital", on: !!ev?.vibration, value: ev?.vibration ? 1 : 0, tint: "#f9b21a" },
-    { key: "sound", label: "Sound", icon: Volume2, kind: "analog", on: active.has("sound"), value: ev?.sound ?? 0, tint: "#22d3ee" },
-    { key: "smoke", label: "Smoke", icon: Flame, kind: "analog", on: active.has("smoke"), value: ev?.smoke ?? 0, tint: "#ec3f8f" },
-    { key: "darkness", label: "Darkness", icon: Moon, kind: "analog", on: active.has("darkness"), value: ev?.darkness ?? 0, tint: "#a78bfa" },
+    { key: "darkness", label: "Visibility", icon: Eye, on: active.has("darkness"), value: ev?.darkness ?? 0, tint: "#5b4dd6" },
+    { key: "sound", label: "Noise", icon: Volume2, on: active.has("sound"), value: ev?.sound ?? 0, tint: "#1390e8" },
+    { key: "motion", label: "Motion", icon: Activity, on: !!ev?.motion, value: ev?.motion ? 1 : 0, tint: "#f0673a" },
+    { key: "vibration", label: "Vibration", icon: Waves, on: !!ev?.vibration, value: ev?.vibration ? 1 : 0, tint: "#f59e0b" },
+    { key: "smoke", label: "Smoke", icon: Flame, on: active.has("smoke"), value: ev?.smoke ?? 0, tint: "#e0245e" },
   ];
 }
 
 export function SensorReadout({ event }: { event: SecurityEvent | null }) {
   return (
-    <div className="space-y-1.5">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {rows(event).map((r) => {
         const Icon = r.icon;
-        const pct = Math.round(Math.max(0, Math.min(1, r.value)) * 100);
+        const reading = humanReading(r.key, r.value, r.on);
         return (
           <div
             key={r.key}
-            className={cn(
-              "flex items-center gap-3 rounded-lg border px-3 py-2 transition-colors",
-              r.on ? "border-hairline/15 bg-surface-3/40" : "border-hairline/8 bg-surface-2/30"
-            )}
+            className="flex items-center gap-2.5 rounded-xl border border-hairline/12 bg-surface-1/50 px-3 py-2.5"
           >
-            <Icon
-              className="h-4 w-4 shrink-0"
-              style={{ color: r.on ? r.tint : "hsl(var(--text-faint))" }}
-            />
-            <span className={cn("w-20 shrink-0 text-[13px]", r.on ? "text-content-strong" : "text-content-muted")}>
-              {r.label}
+            <span
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: `${r.tint}14`, color: r.tint }}
+            >
+              <Icon className="h-4 w-4" />
             </span>
-            {r.kind === "digital" ? (
-              <span
-                className={cn(
-                  "ml-auto rounded-md px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider",
-                  r.on ? "text-content-strong" : "text-content-faint"
-                )}
-                style={r.on ? { background: `${r.tint}22`, color: r.tint } : undefined}
-              >
-                {r.on ? "Detected" : "Clear"}
-              </span>
-            ) : (
-              <>
-                <div className="ml-auto h-1.5 w-24 overflow-hidden rounded-full bg-surface-0/70 sm:w-32">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${pct}%`, background: r.tint, opacity: r.on ? 1 : 0.45 }}
-                  />
-                </div>
-                <span className="num w-9 shrink-0 text-right text-[12px] text-content-muted">{pct}%</span>
-              </>
-            )}
+            <div className="min-w-0">
+              <div className="text-[11px] font-medium text-content-muted">{r.label}</div>
+              <div className={cn("text-[13.5px] font-semibold text-content-strong")}>{reading}</div>
+            </div>
           </div>
         );
       })}

@@ -1,14 +1,16 @@
 "use client";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Navigation, RefreshCw, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, RefreshCw, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { Page } from "@/components/shell/Page";
 import { PathCard } from "@/components/viz/PathCard";
+import { RouteVisualizer } from "@/components/viz/RouteVisualizer";
+import { AnimatedNumber } from "@/components/viz/AnimatedNumber";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
 import { useEvents, useRouteRecommendation } from "@/lib/hooks";
 import { useLiveStore } from "@/lib/store";
-import { cn, threatMeta } from "@/lib/utils";
+import { cn, safetyVerdict, threatMeta } from "@/lib/utils";
 import type { SecurityEvent, ThreatLevel } from "@/lib/types";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -19,11 +21,10 @@ export default function HomePage() {
   const connected = useLiveStore((s) => s.connected);
   const [busy, setBusy] = useState<string | null>(null);
 
-  // latest event per node (events come newest-first) → live sensor values
   const latestByNode = useMemo(() => {
-    const m: Record<string, SecurityEvent> = {};
-    for (const e of events ?? []) if (!m[e.node_id]) m[e.node_id] = e;
-    return m;
+    const map: Record<string, SecurityEvent> = {};
+    for (const e of events ?? []) if (!map[e.node_id]) map[e.node_id] = e;
+    return map;
   }, [events]);
 
   const routes = rec?.routes ?? [];
@@ -32,13 +33,15 @@ export default function HomePage() {
   const recLevel = (recRoute?.threat_level ?? "safe") as ThreatLevel;
   const m = threatMeta(recLevel);
 
-  // demo: drive a path's node up (intrusion) or calm it down
   const fire = (node: string, frame: Record<string, unknown>) =>
     api.simulate({ node_id: node, ...frame }).catch(() => {});
   const demo = async (label: string, node: string, frames: Record<string, unknown>[]) => {
     setBusy(label);
     try {
-      for (const f of frames) { await fire(node, f); await sleep(700); }
+      for (const f of frames) {
+        await fire(node, f);
+        await sleep(700);
+      }
     } finally {
       setBusy(null);
     }
@@ -55,84 +58,122 @@ export default function HomePage() {
 
   return (
     <Page>
-      {/* ── Hero: source → destination + recommendation ─────────────────── */}
+      {/* ── Hero headline ─────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-3xl text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-5 inline-flex items-center gap-2 rounded-full border border-hairline/14 bg-surface-2/70 px-3.5 py-1.5 text-xs font-medium text-content-muted shadow-sm"
+        >
+          <span className="flex h-1.5 w-1.5 rounded-full bg-accent-teal" />
+          Powered by live IoT sensor intelligence
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-content-strong sm:text-5xl lg:text-6xl"
+        >
+          Find the <span className="text-gradient">safest route</span>
+          <br className="hidden sm:block" /> across campus, in real time.
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mx-auto mt-5 max-w-xl text-pretty text-base leading-relaxed text-content-muted sm:text-lg"
+        >
+          NightGuard reads the environment along every path — visibility, noise, motion —
+          and recommends where you should walk tonight.
+        </motion.p>
+      </section>
+
+      {/* ── Route visualization centerpiece ───────────────────────────── */}
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="glass relative overflow-hidden p-6 lg:p-7"
+        transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        className="glass relative mt-10 overflow-hidden p-4 sm:p-6"
       >
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{ background: `radial-gradient(70% 120% at 80% 0%, ${m.hex}, transparent)` }}
-        />
-        <div className="relative flex items-center justify-between gap-3">
+        <div className="mb-3 flex items-center justify-between gap-3 px-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/15 ring-1 ring-accent/30">
-              <Navigation className="h-4 w-4 text-accent" />
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-accent/12 text-accent">
+              <Sparkles className="h-3.5 w-3.5" />
             </span>
-            <span className="stat-label">Safe Route Recommendation</span>
+            <span className="stat-label">Live Route Map</span>
           </div>
-          <span className={cn("flex items-center gap-1.5 text-[11px] font-medium", connected ? "text-threat-safe" : "text-content-faint")}>
-            <span className={cn("h-1.5 w-1.5 rounded-full", connected ? "animate-pulse bg-threat-safe" : "bg-content-faint")} />
+          <span
+            className={cn(
+              "flex items-center gap-1.5 text-[11px] font-medium",
+              connected ? "text-threat-safe" : "text-content-faint"
+            )}
+          >
+            <span
+              className={cn(
+                "h-1.5 w-1.5 rounded-full",
+                connected ? "animate-pulse bg-threat-safe" : "bg-content-faint"
+              )}
+            />
             {connected ? "live" : "offline"}
           </span>
         </div>
 
-        {/* source → destination */}
-        <div className="relative mt-5 flex items-center gap-3 sm:gap-5">
-          <Endpoint label="From" value={rec?.source ?? "Source"} />
-          <div className="relative flex flex-1 items-center">
-            <div className="h-px flex-1 bg-gradient-to-r from-hairline/20 via-hairline/40 to-hairline/20" />
-            <motion.span
-              className="absolute left-0 h-px"
-              style={{ background: m.hex }}
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1.1, ease: "easeOut" }}
-            />
-            <ArrowRight className="mx-1 h-4 w-4 shrink-0 text-content-faint" />
-          </div>
-          <Endpoint label="To" value={rec?.destination ?? "Destination"} align="right" />
-        </div>
+        {isLoading && routes.length === 0 ? (
+          <Skeleton className="h-[300px] w-full" />
+        ) : (
+          <RouteVisualizer
+            source={rec?.source ?? "Source"}
+            destination={rec?.destination ?? "Destination"}
+            routes={routes}
+            recommendedId={recId}
+          />
+        )}
 
-        {/* recommendation line */}
-        <div className="relative mt-6 flex flex-col gap-3 border-t border-hairline/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+        {/* recommendation banner */}
+        <div className="mt-4 flex flex-col gap-4 rounded-xl border border-hairline/12 bg-surface-1/50 p-4 sm:flex-row sm:items-center sm:justify-between">
           {isLoading ? (
-            <Skeleton className="h-12 w-full max-w-md" />
+            <Skeleton className="h-14 w-full max-w-sm" />
           ) : recRoute ? (
-            <div className="flex items-center gap-3">
-              <span
-                className="flex h-12 w-12 items-center justify-center rounded-2xl ring-1"
-                style={{ background: `${m.hex}1a`, color: m.hex, borderColor: `${m.hex}44` }}
-              >
-                <ShieldCheck className="h-6 w-6" />
-              </span>
-              <div>
-                <div className="text-[11px] uppercase tracking-[0.16em] text-content-muted">Take</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-semibold tracking-tight text-content-strong">{recRoute.name}</span>
-                  <span className="num text-sm" style={{ color: m.hex }}>
-                    safety {recRoute.safety_score?.toFixed(0)}/100
-                  </span>
+            <>
+              <div className="flex items-center gap-3.5">
+                <span
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl"
+                  style={{ background: `${m.hex}16`, color: m.hex }}
+                >
+                  <ShieldCheck className="h-7 w-7" />
+                </span>
+                <div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-content-muted">
+                    Recommended route
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-semibold tracking-tight text-content-strong">
+                      {recRoute.name}
+                    </span>
+                    <span className="num text-sm font-semibold" style={{ color: m.hex }}>
+                      <AnimatedNumber value={recRoute.safety_score ?? 0} /> safety
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+              <p className="max-w-md text-[13px] leading-relaxed text-content-muted">
+                {rec?.reason || safetyVerdict(recRoute.safety_score)}
+              </p>
+            </>
           ) : (
             <div className="flex items-center gap-2 text-sm text-content-muted">
-              <Sparkles className="h-4 w-4 text-content-faint" /> Awaiting live telemetry to recommend a route…
+              <Sparkles className="h-4 w-4 text-content-faint" /> Awaiting live telemetry to recommend a
+              route…
             </div>
-          )}
-          {rec?.reason && (
-            <p className="max-w-xl text-[13px] leading-relaxed text-content-muted">{rec.reason}</p>
           )}
         </div>
       </motion.div>
 
-      {/* ── The two paths ───────────────────────────────────────────────── */}
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+      {/* ── The two paths ─────────────────────────────────────────────── */}
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
         {isLoading && routes.length === 0
-          ? [0, 1].map((i) => <Skeleton key={i} className="h-[460px]" />)
+          ? [0, 1].map((i) => <Skeleton key={i} className="h-[480px]" />)
           : routes.map((r, i) => (
               <PathCard
                 key={r.id}
@@ -140,42 +181,50 @@ export default function HomePage() {
                 event={latestByNode[r.node_ids[0]] ?? null}
                 recommended={r.id === recId}
                 index={i}
+                letter={String.fromCharCode(65 + i)}
               />
             ))}
       </div>
 
-      {/* ── Demo controls (inject test activity to see the recommendation move) ── */}
-      <div className="mt-5 glass p-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="panel-title">Try it — simulate activity</div>
-            <p className="mt-0.5 text-xs text-content-muted">
-              Inject a short intrusion on a path and watch the risk rise and the recommendation switch to the safer path.
-            </p>
+      {/* ── Try-it demo ───────────────────────────────────────────────── */}
+      <div className="glass mt-6 p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-amber/14 text-accent-amber">
+              <Zap className="h-4.5 w-4.5" />
+            </span>
+            <div>
+              <div className="panel-title">See it react</div>
+              <p className="mt-0.5 max-w-md text-xs text-content-muted">
+                Simulate activity on a path and watch the safety score drop and the recommendation
+                switch to the calmer route.
+              </p>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <DemoButton busy={busy === "A"} disabled={!!busy} onClick={() => demo("A", nodeA, intrusion)} label={`Intrusion on ${routes[0]?.name ?? "Path A"}`} />
-            <DemoButton busy={busy === "B"} disabled={!!busy} onClick={() => demo("B", nodeB, intrusion)} label={`Intrusion on ${routes[1]?.name ?? "Path B"}`} />
+            <DemoButton
+              busy={busy === "A"}
+              disabled={!!busy}
+              onClick={() => demo("A", nodeA, intrusion)}
+              label={`Disturb ${routes[0]?.name ?? "Path A"}`}
+            />
+            <DemoButton
+              busy={busy === "B"}
+              disabled={!!busy}
+              onClick={() => demo("B", nodeB, intrusion)}
+              label={`Disturb ${routes[1]?.name ?? "Path B"}`}
+            />
             <DemoButton
               busy={busy === "R"}
               disabled={!!busy}
               variant="ghost"
               onClick={() => demo("R", nodeA, calm).then(() => demo("R", nodeB, calm))}
-              label="Calm both"
+              label="Calm everything"
             />
           </div>
         </div>
       </div>
     </Page>
-  );
-}
-
-function Endpoint({ label, value, align = "left" }: { label: string; value: string; align?: "left" | "right" }) {
-  return (
-    <div className={cn(align === "right" && "text-right")}>
-      <div className="text-[10.5px] uppercase tracking-[0.16em] text-content-faint">{label}</div>
-      <div className="mt-0.5 text-base font-semibold tracking-tight text-content-strong sm:text-lg">{value}</div>
-    </div>
   );
 }
 
@@ -198,13 +247,13 @@ function DemoButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors disabled:opacity-50",
+        "inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-[13px] font-medium transition-colors disabled:opacity-50",
         variant === "solid"
-          ? "border border-hairline/15 bg-surface-2/60 text-content hover:text-content-strong"
+          ? "border border-hairline/14 bg-surface-2/80 text-content hover:text-content-strong hover:border-accent/30"
           : "text-content-muted hover:text-content"
       )}
     >
-      {busy ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Navigation className="h-3.5 w-3.5" />}
+      {busy ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <ArrowRight className="h-3.5 w-3.5" />}
       {label}
     </motion.button>
   );

@@ -1,60 +1,47 @@
 "use client";
-import { motion } from "framer-motion";
 
 /**
- * Layered command-center backdrop:
- *  • deep radial vignette
- *  • two slow-drifting aurora blobs (electric blue + purple/cyan)
- *  • faint engineering grid
- *  • a single slow scanline for "live system" feel
- * Pure CSS/Framer — GPU-cheap, sits behind all content (-z-10), pointer-none.
+ * Light futuristic backdrop:
+ *  • warm pearl base wash
+ *  • soft, slow-drifting aurora blobs (indigo · ocean · teal) at low opacity
+ *  • faint engineering grid that fades toward the edges
+ * Pure CSS — GPU-cheap, sits behind all content (-z-10), pointer-none.
  */
 export function AnimatedBackground() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {/* base vignette */}
+      {/* base wash */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% -10%, hsl(222 60% 8%) 0%, hsl(222 47% 4%) 55%, hsl(222 50% 3%) 100%)",
+            "radial-gradient(120% 80% at 50% -10%, hsl(228 60% 99%) 0%, hsl(228 40% 98%) 50%, hsl(228 36% 96%) 100%)",
         }}
       />
 
       {/* aurora blobs */}
-      <motion.div
-        className="absolute left-[8%] top-[-12%] h-[55vh] w-[55vh] rounded-full blur-[120px] animate-aurora-1"
-        style={{ background: "radial-gradient(circle, hsl(222 100% 60% / 0.28), transparent 60%)" }}
+      <div
+        className="absolute left-[-6%] top-[-10%] h-[52vh] w-[52vh] rounded-full blur-[120px] animate-blob-1"
+        style={{ background: "radial-gradient(circle, hsl(248 70% 56% / 0.16), transparent 62%)" }}
       />
-      <motion.div
-        className="absolute right-[4%] top-[6%] h-[48vh] w-[48vh] rounded-full blur-[130px] animate-aurora-2"
-        style={{ background: "radial-gradient(circle, hsl(265 90% 65% / 0.22), transparent 60%)" }}
+      <div
+        className="absolute right-[-4%] top-[2%] h-[46vh] w-[46vh] rounded-full blur-[130px] animate-blob-2"
+        style={{ background: "radial-gradient(circle, hsl(208 92% 52% / 0.14), transparent 62%)" }}
       />
-      <motion.div
-        className="absolute bottom-[-18%] left-[35%] h-[50vh] w-[50vh] rounded-full blur-[140px] animate-aurora-1"
-        style={{ background: "radial-gradient(circle, hsl(190 95% 55% / 0.14), transparent 60%)" }}
+      <div
+        className="absolute bottom-[-16%] left-[34%] h-[48vh] w-[48vh] rounded-full blur-[140px] animate-blob-1"
+        style={{ background: "radial-gradient(circle, hsl(174 70% 41% / 0.12), transparent 62%)" }}
       />
 
       {/* engineering grid */}
       <div
-        className="absolute inset-0 opacity-[0.5]"
+        className="absolute inset-0"
         style={{
-          backgroundSize: "44px 44px",
+          backgroundSize: "46px 46px",
           backgroundImage:
-            "linear-gradient(hsl(215 30% 60% / 0.035) 1px, transparent 1px), linear-gradient(90deg, hsl(215 30% 60% / 0.035) 1px, transparent 1px)",
-          maskImage: "radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 90%)",
-        }}
-      />
-
-      {/* scanline */}
-      <div className="absolute inset-x-0 top-0 h-px animate-scan bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-
-      {/* film grain / noise */}
-      <div
-        className="absolute inset-0 opacity-[0.025] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+            "linear-gradient(hsl(230 24% 56% / 0.05) 1px, transparent 1px), linear-gradient(90deg, hsl(230 24% 56% / 0.05) 1px, transparent 1px)",
+          maskImage: "radial-gradient(120% 75% at 50% 0%, #000 25%, transparent 88%)",
+          WebkitMaskImage: "radial-gradient(120% 75% at 50% 0%, #000 25%, transparent 88%)",
         }}
       />
     </div>

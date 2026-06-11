@@ -1,42 +1,45 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import { AnimatedBackground } from "@/components/shell/AnimatedBackground";
-import { Sidebar } from "@/components/shell/Sidebar";
-import { Topbar } from "@/components/shell/Topbar";
+import { Navbar } from "@/components/shell/Navbar";
 import { Providers } from "@/components/shell/Providers";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
 });
-const mono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-jb",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "NightGuard — Security Intelligence",
-  description: "Intelligent Campus Night Security — Security Operations Center",
+  title: "NightGuard — Find your safest route",
+  description:
+    "An intelligent route safety platform powered by IoT sensor nodes. NightGuard recommends the safest path between two places using real-time environmental risk analysis.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f8fc",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${mono.variable}`}>
-      <body>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} bg-surface-0`}>
+      <body className="bg-surface-0">
         <Providers>
           <AnimatedBackground />
           <CommandPalette />
-          <div className="min-h-screen">
-            <Sidebar />
-            <div className="lg:pl-[248px]">
-              <Topbar />
-              <div className="grid-bg min-h-[calc(100vh-64px)]">{children}</div>
-            </div>
+          <div className="relative flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
           </div>
         </Providers>
       </body>
