@@ -19,13 +19,13 @@ import { TrendChart } from "@/components/viz/TrendChart";
 import { useForecast, useSensors, useTimeseries } from "@/lib/hooks";
 import { useLiveStore } from "@/lib/store";
 
-const SENSOR_COLORS = ["#5b8cff", "#f9b21a", "#ef4444", "#1fbf7e", "#a78bfa"];
+const SENSOR_COLORS = ["#0d8de6", "#f59f0a", "#e11d48", "#1aa86a", "#8b5cf6"];
 const TOOLTIP = {
-  background: "hsl(221 40% 9% / 0.96)",
-  border: "1px solid hsl(215 30% 60% / 0.18)",
+  background: "hsl(240 24% 99% / 0.96)",
+  border: "1px solid hsl(232 22% 95% / 0.8)",
   borderRadius: 12,
   fontSize: 12,
-  color: "#e2e8f0",
+  color: "#1f2937",
 };
 
 export default function AnalyticsPage() {
@@ -52,7 +52,7 @@ export default function AnalyticsPage() {
   const dist = ["safe", "low", "medium", "high", "critical", "emergency"].map((lvl, i) => ({
     name: lvl,
     value: events.filter((e) => e.threat_level === lvl).length,
-    color: ["#1fbf7e", "#2f9ff0", "#f9b21a", "#fb7a2c", "#ef4444", "#ec3f8f"][i],
+    color: ["#1aa86a", "#1aa7b8", "#f59f0a", "#ef5f3c", "#e11d48", "#db2777"][i],
   })).filter((d) => d.value > 0);
 
   return (

@@ -55,8 +55,8 @@ export default function IncidentsPage() {
                 className={cn(
                   "w-full rounded-xl border p-3 text-left transition-colors",
                   selected === a.id
-                    ? "border-accent/40 bg-accent/8"
-                    : "border-hairline/10 bg-surface-2/40 hover:bg-surface-2/70"
+                    ? "border-primary/40 bg-primary/8"
+                    : "border-hairline/[0.07] bg-surface-2/40 hover:bg-surface-2/70"
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -124,10 +124,10 @@ export default function IncidentsPage() {
 
               <div className="mt-6">
                 <div className="stat-label mb-3">Investigation Timeline</div>
-                <div className="relative space-y-4 border-l border-hairline/15 pl-5">
+                <div className="relative space-y-4 border-l border-hairline/[0.1] pl-5">
                   {detail.timeline.map((t) => (
                     <div key={t.id} className="relative">
-                      <span className="absolute -left-[23px] top-1 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-surface-1" />
+                      <span className="absolute -left-[23px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-surface-1" />
                       <div className="flex flex-wrap items-center gap-2 text-xs">
                         <span className="num text-content-faint">{fmtTime(t.ts)}</span>
                         <span className="rounded bg-surface-3/60 px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-content-muted">{t.kind}</span>
@@ -152,7 +152,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
       onClick={onClick}
       className={cn(
         "rounded-full px-3 py-1 text-xs font-medium capitalize transition-colors",
-        active ? "bg-accent/15 text-accent ring-1 ring-accent/30" : "bg-surface-3/40 text-content-muted hover:text-content-strong"
+        active ? "bg-primary/15 text-primary ring-1 ring-primary/30" : "bg-surface-3/40 text-content-muted hover:text-content-strong"
       )}
     >
       {label}
@@ -162,7 +162,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
 
 function Meta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-hairline/10 bg-surface-2/40 p-2.5">
+    <div className="rounded-lg border border-hairline/[0.07] bg-surface-2/40 p-2.5">
       <div className="stat-label">{label}</div>
       <div className="mt-1 truncate text-sm capitalize text-content">{value}</div>
     </div>
