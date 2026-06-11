@@ -12,10 +12,10 @@ export function SectionTitle({
   right?: React.ReactNode;
 }) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-3">
-      <div>
-        <h2 className="text-base font-semibold tracking-tight text-content-strong">{title}</h2>
-        {subtitle && <p className="mt-0.5 text-xs text-content-muted">{subtitle}</p>}
+    <div className="mb-5 flex items-end justify-between gap-4">
+      <div className="flex-1">
+        <h2 className="text-lg font-bold tracking-tight text-content-strong bg-gradient-to-r from-content-strong to-accent/70 bg-clip-text text-transparent">{title}</h2>
+        {subtitle && <p className="mt-1.5 text-sm text-content-muted">{subtitle}</p>}
       </div>
       {right}
     </div>

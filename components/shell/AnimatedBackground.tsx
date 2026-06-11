@@ -2,52 +2,52 @@
 import { motion } from "framer-motion";
 
 /**
- * Layered command-center backdrop:
- *  • deep radial vignette
- *  • two slow-drifting aurora blobs (electric blue + purple/cyan)
- *  • faint engineering grid
- *  • a single slow scanline for "live system" feel
- * Pure CSS/Framer — GPU-cheap, sits behind all content (-z-10), pointer-none.
+ * Modern premium backdrop:
+ *  • deep navy base gradient
+ *  • vibrant cyan and orange aurora blobs for brand colors
+ *  • subtle grid for tech feel
+ *  • dynamic scanline for live system aesthetic
+ * Pure CSS/Framer — GPU-optimized, sits behind all content (-z-10), pointer-none.
  */
 export function AnimatedBackground() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {/* base vignette */}
+      {/* base gradient vignette */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% -10%, hsl(222 60% 8%) 0%, hsl(222 47% 4%) 55%, hsl(222 50% 3%) 100%)",
+            "radial-gradient(ellipse 140% 110% at 50% 0%, hsl(217 35% 12%) 0%, hsl(217 30% 8%) 50%, hsl(217 35% 6%) 100%)",
         }}
       />
 
-      {/* aurora blobs */}
+      {/* brand aurora blobs - cyan and orange */}
       <motion.div
-        className="absolute left-[8%] top-[-12%] h-[55vh] w-[55vh] rounded-full blur-[120px] animate-aurora-1"
-        style={{ background: "radial-gradient(circle, hsl(222 100% 60% / 0.28), transparent 60%)" }}
+        className="absolute left-[5%] top-[-15%] h-[60vh] w-[60vh] rounded-full blur-[140px] animate-aurora-1"
+        style={{ background: "radial-gradient(circle, hsl(186 100% 52% / 0.25), transparent 65%)" }}
       />
       <motion.div
-        className="absolute right-[4%] top-[6%] h-[48vh] w-[48vh] rounded-full blur-[130px] animate-aurora-2"
-        style={{ background: "radial-gradient(circle, hsl(265 90% 65% / 0.22), transparent 60%)" }}
+        className="absolute right-[6%] top-[8%] h-[50vh] w-[50vh] rounded-full blur-[150px] animate-aurora-2"
+        style={{ background: "radial-gradient(circle, hsl(15 100% 55% / 0.18), transparent 65%)" }}
       />
       <motion.div
-        className="absolute bottom-[-18%] left-[35%] h-[50vh] w-[50vh] rounded-full blur-[140px] animate-aurora-1"
-        style={{ background: "radial-gradient(circle, hsl(190 95% 55% / 0.14), transparent 60%)" }}
+        className="absolute bottom-[-20%] left-[40%] h-[55vh] w-[55vh] rounded-full blur-[160px] animate-aurora-1"
+        style={{ background: "radial-gradient(circle, hsl(240 90% 60% / 0.12), transparent 65%)" }}
       />
 
-      {/* engineering grid */}
+      {/* premium grid with accent colors */}
       <div
-        className="absolute inset-0 opacity-[0.5]"
+        className="absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundSize: "44px 44px",
+          backgroundSize: "50px 50px",
           backgroundImage:
-            "linear-gradient(hsl(215 30% 60% / 0.035) 1px, transparent 1px), linear-gradient(90deg, hsl(215 30% 60% / 0.035) 1px, transparent 1px)",
-          maskImage: "radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 90%)",
+            "linear-gradient(hsl(186 80% 55% / 0.04) 1px, transparent 1px), linear-gradient(90deg, hsl(186 80% 55% / 0.04) 1px, transparent 1px)",
+          maskImage: "radial-gradient(ellipse 130% 90% at 50% 0%, #000 20%, transparent 85%)",
         }}
       />
 
-      {/* scanline */}
-      <div className="absolute inset-x-0 top-0 h-px animate-scan bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+      {/* dynamic scanline */}
+      <div className="absolute inset-x-0 top-0 h-px animate-scan bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
 
       {/* film grain / noise */}
       <div

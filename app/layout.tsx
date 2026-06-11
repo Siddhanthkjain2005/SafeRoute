@@ -20,8 +20,8 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NightGuard — Security Intelligence",
-  description: "Intelligent Campus Night Security — Security Operations Center",
+  title: "SafeRoute — Route Security Intelligence",
+  description: "Intelligent route optimization with real-time threat monitoring and secure path recommendations",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

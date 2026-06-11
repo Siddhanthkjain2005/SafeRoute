@@ -60,7 +60,7 @@ export default function HomePage() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="glass relative overflow-hidden p-6 lg:p-7"
+        className="glass relative overflow-hidden p-7 lg:p-8"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.12]"
