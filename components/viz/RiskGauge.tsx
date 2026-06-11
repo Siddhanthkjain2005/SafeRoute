@@ -29,14 +29,14 @@ export function RiskGauge({ score, level }: { score: number; level: ThreatLevel 
       <svg viewBox="0 0 220 140" className="w-full max-w-[280px]">
         <defs>
           <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#22c55e" />
-            <stop offset="40%" stopColor="#f59e0b" />
+            <stop offset="0%" stopColor="#12b76a" />
+            <stop offset="40%" stopColor="#fbbf24" />
             <stop offset="70%" stopColor="#ef4444" />
-            <stop offset="100%" stopColor="#db2777" />
+            <stop offset="100%" stopColor="#f43f5e" />
           </linearGradient>
         </defs>
         {/* track */}
-        <path d={arc(0, 100)} fill="none" stroke="rgba(148,163,184,0.12)" strokeWidth={14} strokeLinecap="round" />
+        <path d={arc(0, 100)} fill="none" stroke="rgba(212,216,214,0.1)" strokeWidth={14} strokeLinecap="round" />
         {/* value arc */}
         <motion.path
           d={arc(0, 100)}

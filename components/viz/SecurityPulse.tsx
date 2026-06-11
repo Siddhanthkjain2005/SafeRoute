@@ -13,11 +13,11 @@ export function SecurityPulse({ height = 80 }: { height?: number }) {
   const pulse = useLiveStore((s) => s.pulse);
   const lastEvent = useLiveStore((s) => s.events[0]);
   const pulseRef = useRef(pulse);
-  const colorRef = useRef("#5b8cff");
+  const colorRef = useRef("#12b76a");
 
   useEffect(() => {
     pulseRef.current = pulse; // trigger a spike when this changes
-    colorRef.current = lastEvent ? threatMeta(lastEvent.threat_level).hex : "#5b8cff";
+    colorRef.current = lastEvent ? threatMeta(lastEvent.threat_level).hex : "#12b76a";
   }, [pulse, lastEvent]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function SecurityPulse({ height = 80 }: { height?: number }) {
       const color = colorRef.current;
 
       // grid baseline
-      ctx.strokeStyle = "rgba(148,163,184,0.08)";
+      ctx.strokeStyle = "rgba(212,216,214,0.07)";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(0, mid);

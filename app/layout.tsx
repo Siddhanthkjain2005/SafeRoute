@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import { AnimatedBackground } from "@/components/shell/AnimatedBackground";
@@ -8,14 +8,15 @@ import { Topbar } from "@/components/shell/Topbar";
 import { Providers } from "@/components/shell/Providers";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 
-const inter = Inter({
+const grotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-grotesk",
   display: "swap",
 });
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-jb",
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={`dark bg-surface-0 ${grotesk.variable} ${mono.variable}`}>
       <body>
         <Providers>
           <AnimatedBackground />

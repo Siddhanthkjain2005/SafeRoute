@@ -18,11 +18,11 @@ type Row = {
 function rows(ev: SecurityEvent | null): Row[] {
   const active = new Set(ev?.active_sensors ?? []);
   return [
-    { key: "motion", label: "Motion", icon: Activity, kind: "digital", on: !!ev?.motion, value: ev?.motion ? 1 : 0, tint: "#fb7a2c" },
-    { key: "vibration", label: "Vibration", icon: Waves, kind: "digital", on: !!ev?.vibration, value: ev?.vibration ? 1 : 0, tint: "#f9b21a" },
-    { key: "sound", label: "Sound", icon: Volume2, kind: "analog", on: active.has("sound"), value: ev?.sound ?? 0, tint: "#22d3ee" },
-    { key: "smoke", label: "Smoke", icon: Flame, kind: "analog", on: active.has("smoke"), value: ev?.smoke ?? 0, tint: "#ec3f8f" },
-    { key: "darkness", label: "Darkness", icon: Moon, kind: "analog", on: active.has("darkness"), value: ev?.darkness ?? 0, tint: "#a78bfa" },
+    { key: "motion", label: "Motion", icon: Activity, kind: "digital", on: !!ev?.motion, value: ev?.motion ? 1 : 0, tint: "#f97316" },
+    { key: "vibration", label: "Vibration", icon: Waves, kind: "digital", on: !!ev?.vibration, value: ev?.vibration ? 1 : 0, tint: "#fbbf24" },
+    { key: "sound", label: "Sound", icon: Volume2, kind: "analog", on: active.has("sound"), value: ev?.sound ?? 0, tint: "#2dd4bf" },
+    { key: "smoke", label: "Smoke", icon: Flame, kind: "analog", on: active.has("smoke"), value: ev?.smoke ?? 0, tint: "#f43f5e" },
+    { key: "darkness", label: "Darkness", icon: Moon, kind: "analog", on: active.has("darkness"), value: ev?.darkness ?? 0, tint: "#38bdf8" },
   ];
 }
 

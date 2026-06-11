@@ -16,12 +16,12 @@ interface ThreatStyle {
 }
 
 export const THREAT_META: Record<ThreatLevel, ThreatStyle> = {
-  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/30", hex: "#1fbf7e", glow: "rgba(31,191,126,0.5)" },
-  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/30", hex: "#2f9ff0", glow: "rgba(47,159,240,0.5)" },
-  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/10", ring: "ring-threat-medium/30", hex: "#f9b21a", glow: "rgba(249,178,26,0.5)" },
-  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/10", ring: "ring-threat-high/30", hex: "#fb7a2c", glow: "rgba(251,122,44,0.5)" },
+  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/30", hex: "#12b76a", glow: "rgba(18,183,106,0.5)" },
+  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/30", hex: "#38bdf8", glow: "rgba(56,189,248,0.5)" },
+  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/10", ring: "ring-threat-medium/30", hex: "#fbbf24", glow: "rgba(251,191,36,0.5)" },
+  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/10", ring: "ring-threat-high/30", hex: "#f97316", glow: "rgba(249,115,22,0.5)" },
   critical: { label: "Critical", text: "text-threat-critical", bg: "bg-threat-critical/15", ring: "ring-threat-critical/40", hex: "#ef4444", glow: "rgba(239,68,68,0.55)" },
-  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/15", ring: "ring-threat-emergency/40", hex: "#ec3f8f", glow: "rgba(236,63,143,0.55)" },
+  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/15", ring: "ring-threat-emergency/40", hex: "#f43f5e", glow: "rgba(244,63,94,0.55)" },
 };
 
 export function threatMeta(level: ThreatLevel): ThreatStyle {
@@ -29,10 +29,10 @@ export function threatMeta(level: ThreatLevel): ThreatStyle {
 }
 
 export const ACCENT = {
-  blue: "#5b8cff",
-  cyan: "#22d3ee",
-  purple: "#a78bfa",
-  amber: "#f9b21a",
+  blue: "#12b76a", // primary signal (emerald)
+  cyan: "#2dd4bf", // teal
+  purple: "#38bdf8", // sky
+  amber: "#fbbf24",
   red: "#ef4444",
 };
 

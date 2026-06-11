@@ -31,14 +31,14 @@ export function PathCard({
       className={cn(
         "glass relative overflow-hidden p-6",
         recommended
-          ? "ring-2 ring-threat-safe/50 shadow-[0_0_50px_-12px_rgba(31,191,126,0.4)]"
+          ? "ring-2 ring-threat-safe/50 shadow-[0_0_50px_-12px_rgba(18,183,106,0.4)]"
           : "ring-1 ring-hairline/10"
       )}
     >
       {/* soft color wash by threat */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-28 opacity-[0.10]"
-        style={{ background: `radial-gradient(60% 100% at 50% 0%, ${available ? m.hex : "#1fbf7e"}, transparent)` }}
+        style={{ background: `radial-gradient(60% 100% at 50% 0%, ${available ? m.hex : "#12b76a"}, transparent)` }}
       />
 
       {/* header */}

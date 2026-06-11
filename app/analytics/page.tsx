@@ -19,13 +19,13 @@ import { TrendChart } from "@/components/viz/TrendChart";
 import { useForecast, useSensors, useTimeseries } from "@/lib/hooks";
 import { useLiveStore } from "@/lib/store";
 
-const SENSOR_COLORS = ["#5b8cff", "#f9b21a", "#ef4444", "#1fbf7e", "#a78bfa"];
+const SENSOR_COLORS = ["#12b76a", "#fbbf24", "#ef4444", "#2dd4bf", "#38bdf8"];
 const TOOLTIP = {
-  background: "hsl(221 40% 9% / 0.96)",
-  border: "1px solid hsl(215 30% 60% / 0.18)",
+  background: "hsl(160 5% 7% / 0.96)",
+  border: "1px solid hsl(160 8% 85% / 0.14)",
   borderRadius: 12,
   fontSize: 12,
-  color: "#e2e8f0",
+  color: "#e6eae8",
 };
 
 export default function AnalyticsPage() {
@@ -52,7 +52,7 @@ export default function AnalyticsPage() {
   const dist = ["safe", "low", "medium", "high", "critical", "emergency"].map((lvl, i) => ({
     name: lvl,
     value: events.filter((e) => e.threat_level === lvl).length,
-    color: ["#1fbf7e", "#2f9ff0", "#f9b21a", "#fb7a2c", "#ef4444", "#ec3f8f"][i],
+    color: ["#12b76a", "#38bdf8", "#fbbf24", "#f97316", "#ef4444", "#f43f5e"][i],
   })).filter((d) => d.value > 0);
 
   return (
@@ -92,10 +92,10 @@ export default function AnalyticsPage() {
           <CardHeader title="Activation Statistics" subtitle="sensor triggers (24h)" />
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={sensors ?? []} layout="vertical" margin={{ left: 16 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(215 30% 60% / 0.08)" horizontal={false} />
-              <XAxis type="number" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis type="category" dataKey="label" width={92} tick={{ fill: "#94a3b8", fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={TOOLTIP} cursor={{ fill: "hsl(215 30% 60% / 0.06)" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(160 8% 85% / 0.07)" horizontal={false} />
+              <XAxis type="number" tick={{ fill: "#7d8884", fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis type="category" dataKey="label" width={92} tick={{ fill: "#9ba5a1", fontSize: 11 }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={TOOLTIP} cursor={{ fill: "hsl(160 8% 85% / 0.05)" }} />
               <Bar dataKey="activations" radius={[0, 6, 6, 0]}>
                 {(sensors ?? []).map((_, i) => <Cell key={i} fill={SENSOR_COLORS[i % SENSOR_COLORS.length]} />)}
               </Bar>

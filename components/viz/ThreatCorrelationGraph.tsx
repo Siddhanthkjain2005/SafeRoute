@@ -218,7 +218,7 @@ export function ThreatCorrelationGraph({
             y1={a.y}
             x2={b.x}
             y2={b.y}
-            stroke={l.active ? ACCENT.cyan : "hsl(215 30% 60%)"}
+            stroke={l.active ? ACCENT.cyan : "hsl(160 8% 70%)"}
             strokeOpacity={dim ? 0.05 : l.active ? 0.35 : 0.14}
             strokeWidth={l.active ? 1.4 : 1}
           />
@@ -244,7 +244,7 @@ export function ThreatCorrelationGraph({
             )}
             <circle r={n.r} fill={`${color}22`} stroke={color} strokeWidth={1.5} style={{ filter: `drop-shadow(0 0 6px ${color}66)` }} />
             {n.type === "core" && (
-              <text textAnchor="middle" dy="0.35em" fontSize="9" fontWeight={700} fill="hsl(213 31% 95%)">
+              <text textAnchor="middle" dy="0.35em" fontSize="9" fontWeight={700} fill="hsl(160 10% 96%)">
                 NG
               </text>
             )}
@@ -252,7 +252,7 @@ export function ThreatCorrelationGraph({
               textAnchor="middle"
               y={n.r + 12}
               fontSize={n.type === "sensor" ? 8.5 : 10}
-              fill="hsl(215 20% 78%)"
+              fill="hsl(160 6% 76%)"
               style={{ pointerEvents: "none" }}
             >
               {n.label}

@@ -70,7 +70,7 @@ export function RiskOrb({
                 y1={c + r1 * Math.sin(a)}
                 x2={c + r2 * Math.cos(a)}
                 y2={c + r2 * Math.sin(a)}
-                stroke="hsl(215 30% 60%)"
+                stroke="hsl(160 8% 70%)"
                 strokeOpacity={major ? 0.35 : 0.15}
                 strokeWidth={major ? 1.5 : 1}
               />
@@ -82,7 +82,7 @@ export function RiskOrb({
         <circle cx={c} cy={c} r={RC - 6} fill="url(#orbCore)" />
 
         {/* track + risk arc */}
-        <circle cx={c} cy={c} r={R} fill="none" stroke="hsl(215 30% 60% / 0.1)" strokeWidth={10} />
+        <circle cx={c} cy={c} r={R} fill="none" stroke="hsl(160 8% 70% / 0.1)" strokeWidth={10} />
         <motion.circle
           cx={c}
           cy={c}
@@ -100,13 +100,13 @@ export function RiskOrb({
         />
 
         {/* confidence ring (inner, dashed) */}
-        <circle cx={c} cy={c} r={RC} fill="none" stroke="hsl(215 30% 60% / 0.08)" strokeWidth={3} />
+        <circle cx={c} cy={c} r={RC} fill="none" stroke="hsl(160 8% 70% / 0.08)" strokeWidth={3} />
         <motion.circle
           cx={c}
           cy={c}
           r={RC}
           fill="none"
-          stroke="hsl(190 95% 55%)"
+          stroke="hsl(172 70% 50%)"
           strokeWidth={3}
           strokeLinecap="round"
           transform={`rotate(-90 ${c} ${c})`}

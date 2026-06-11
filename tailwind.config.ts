@@ -48,12 +48,12 @@ const config: Config = {
         xl: "var(--r-xl)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono-jb)", "ui-monospace", "monospace"],
+        sans: ["var(--font-grotesk)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px hsl(var(--accent) / 0.25), 0 8px 40px -8px hsl(var(--accent) / 0.45)",
-        "glow-soft": "0 0 30px -6px hsl(var(--accent) / 0.4)",
+        glow: "0 0 0 1px hsl(var(--accent) / 0.3), 0 6px 28px -8px hsl(var(--accent) / 0.5)",
+        "glow-soft": "0 0 24px -6px hsl(var(--accent) / 0.35)",
       },
       keyframes: {
         "pulse-ring": {
