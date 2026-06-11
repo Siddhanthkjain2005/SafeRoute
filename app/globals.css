@@ -12,6 +12,7 @@
   --surface-0: 0 0% 100%;      /* pure white cards */
   --surface-1: 36 30% 98%;     /* pearl panels */
   --surface-2: 240 24% 99%;    /* cool white elevated */
+  --surface-3: 232 22% 95%;    /* soft tint for chips / tracks */
   --hairline: 232 24% 18%;     /* used at low alpha for borders */
 
   /* ── Brand ───────────────────────────────────────────────────────────── */

@@ -31,7 +31,7 @@ export function Toaster() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 60, scale: 0.96 }}
               transition={{ type: "spring", stiffness: 320, damping: 28 }}
-              className="glass pointer-events-auto relative overflow-hidden p-3.5"
+              className="card pointer-events-auto relative overflow-hidden p-3.5"
             >
               {/* severity rail */}
               <span className="absolute inset-y-0 left-0 w-1" style={{ background: m.hex }} />

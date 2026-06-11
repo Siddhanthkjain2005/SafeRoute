@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("glass glass-hover p-5", className)} {...props} />;
+  return <div className={cn("card card-hover p-5", className)} {...props} />;
 }
 
 /** Card that animates in on mount (staggered via `delay`). */
@@ -22,7 +22,7 @@ export function MotionCard({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("glass glass-hover p-5", className)}
+      className={cn("card card-hover p-5", className)}
     >
       {children}
     </motion.div>

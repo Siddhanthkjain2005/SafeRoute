@@ -29,10 +29,10 @@ export function PathCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "glass relative overflow-hidden p-6",
+        "card relative overflow-hidden p-6",
         recommended
-          ? "ring-2 ring-threat-safe/50 shadow-[0_0_50px_-12px_rgba(31,191,126,0.4)]"
-          : "ring-1 ring-hairline/10"
+          ? "ring-2 ring-threat-safe/50 shadow-[0_24px_60px_-20px_rgba(26,168,106,0.45)]"
+          : "ring-1 ring-hairline/[0.07]"
       )}
     >
       {/* soft color wash by threat */}

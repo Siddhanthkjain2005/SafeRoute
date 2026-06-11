@@ -7,7 +7,7 @@ export function Skeleton({ className }: { className?: string }) {
 /** Card-shaped skeleton block used while a panel's data loads. */
 export function SkeletonCard({ className, lines = 3 }: { className?: string; lines?: number }) {
   return (
-    <div className={cn("glass p-5", className)}>
+    <div className={cn("card p-5", className)}>
       <Skeleton className="h-3 w-24" />
       <Skeleton className="mt-4 h-8 w-32" />
       <div className="mt-5 space-y-2.5">

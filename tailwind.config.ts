@@ -16,6 +16,7 @@ const config: Config = {
           0: hsl("--surface-0"),
           1: hsl("--surface-1"),
           2: hsl("--surface-2"),
+          3: hsl("--surface-3"),
         },
         hairline: hsl("--hairline"),
         primary: {
