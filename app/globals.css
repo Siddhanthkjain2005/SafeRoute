@@ -3,50 +3,50 @@
 @tailwind utilities;
 
 /* ╔══════════════════════════════════════════════════════════════════════╗
-   ║  NightGuard Design Tokens                                              ║
-   ║  Security-intelligence theme · dark-first · futuristic                ║
+   ║  NightGuard — Light Futuristic Identity                                ║
+   ║  Warm ivory surfaces · deep indigo · ocean blue · teal · soft violet   ║
    ╚══════════════════════════════════════════════════════════════════════╝ */
 :root {
-  /* ── Surfaces (deep navy / charcoal, layered depth) ──────────────────── */
-  --surface-0: 222 47% 4%;     /* page base */
-  --surface-1: 222 44% 6%;     /* sunk panels */
-  --surface-2: 221 40% 9%;     /* cards */
-  --surface-3: 220 38% 13%;    /* elevated / hover */
-  --hairline: 215 30% 60%;     /* used at low alpha for borders */
+  /* ── Surfaces (warm ivory → pearl → cloud white) ─────────────────────── */
+  --canvas: 40 38% 97%;        /* page base — warm ivory */
+  --surface-0: 0 0% 100%;      /* pure white cards */
+  --surface-1: 36 30% 98%;     /* pearl panels */
+  --surface-2: 240 24% 99%;    /* cool white elevated */
+  --hairline: 232 24% 18%;     /* used at low alpha for borders */
 
-  /* ── Accents ─────────────────────────────────────────────────────────── */
-  --accent: 222 100% 68%;      /* electric blue */
-  --accent-2: 190 95% 55%;     /* cyan */
-  --accent-3: 265 89% 70%;     /* purple */
-  --accent-amber: 38 95% 58%;
-  --accent-red: 0 84% 60%;
+  /* ── Brand ───────────────────────────────────────────────────────────── */
+  --primary: 244 62% 54%;      /* deep indigo */
+  --primary-soft: 244 78% 96%;
+  --secondary: 211 90% 50%;    /* ocean blue */
+  --accent: 174 72% 42%;       /* teal */
+  --highlight: 262 70% 64%;    /* soft violet */
 
-  /* ── Threat scale ────────────────────────────────────────────────────── */
-  --t-safe: 152 70% 45%;
-  --t-low: 205 90% 58%;
-  --t-medium: 42 96% 55%;
-  --t-high: 25 95% 58%;
-  --t-critical: 0 84% 60%;
-  --t-emergency: 330 81% 56%;
+  /* ── Risk scale ──────────────────────────────────────────────────────── */
+  --t-safe: 158 72% 40%;       /* emerald */
+  --t-low: 188 70% 42%;        /* teal-cyan */
+  --t-medium: 38 92% 50%;      /* amber */
+  --t-high: 12 84% 58%;        /* coral */
+  --t-critical: 348 78% 50%;   /* ruby */
+  --t-emergency: 320 72% 50%;
 
-  /* ── Text ────────────────────────────────────────────────────────────── */
-  --text-strong: 213 31% 95%;
-  --text: 215 20% 78%;
-  --text-muted: 215 16% 55%;
-  --text-faint: 215 14% 40%;
+  /* ── Text (deep indigo-charcoal hierarchy) ───────────────────────────── */
+  --text-strong: 232 38% 14%;
+  --text: 232 18% 30%;
+  --text-muted: 232 12% 46%;
+  --text-faint: 232 10% 62%;
 
-  /* ── Radii / spacing rhythm ──────────────────────────────────────────── */
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
+  /* ── Radii ───────────────────────────────────────────────────────────── */
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-mono-jb), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-sans-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono-geist), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 * {
-  border-color: hsl(var(--hairline) / 0.1);
+  border-color: hsl(var(--hairline) / 0.08);
 }
 
 html,
@@ -56,110 +56,95 @@ body {
 
 body {
   @apply text-[hsl(var(--text))] antialiased;
-  background-color: hsl(var(--surface-0));
+  background-color: hsl(var(--canvas));
   font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss01", "ss03";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: hsl(var(--accent) / 0.3);
+  background: hsl(var(--primary) / 0.18);
   color: hsl(var(--text-strong));
 }
 
-/* ── Component utilities ───────────────────────────────────────────────── */
 @layer components {
-  .glass {
+  /* Premium soft card — layered depth, gentle shadow */
+  .card {
     position: relative;
     border-radius: var(--r-lg);
-    border: 1px solid hsl(var(--hairline) / 0.1);
-    background:
-      linear-gradient(180deg, hsl(var(--surface-2) / 0.9), hsl(var(--surface-1) / 0.75));
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid hsl(var(--hairline) / 0.07);
+    background: hsl(var(--surface-0));
     box-shadow:
-      0 1px 0 0 hsl(0 0% 100% / 0.05) inset,
-      0 0 0 1px hsl(0 0% 0% / 0.2),
-      0 24px 60px -24px hsl(222 60% 2% / 0.8);
+      0 1px 2px hsl(232 38% 14% / 0.04),
+      0 12px 32px -16px hsl(232 38% 24% / 0.16);
   }
-  /* subtle top edge highlight */
-  .glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), transparent 40%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .card-hover {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s, border-color 0.5s;
   }
-  .glass-hover {
-    transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
-  }
-  .glass-hover:hover {
-    border-color: hsl(var(--accent) / 0.3);
+  .card-hover:hover {
+    transform: translateY(-3px);
+    border-color: hsl(var(--primary) / 0.18);
     box-shadow:
-      0 1px 0 0 hsl(0 0% 100% / 0.06) inset,
-      0 0 0 1px hsl(var(--accent) / 0.18),
-      0 30px 70px -28px hsl(var(--accent) / 0.25);
+      0 1px 2px hsl(232 38% 14% / 0.04),
+      0 28px 60px -24px hsl(244 62% 40% / 0.28);
+  }
+
+  /* Frosted glass for floating chrome (topbar / pills) */
+  .glass {
+    background: hsl(var(--surface-0) / 0.72);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid hsl(var(--hairline) / 0.06);
   }
 
   .stat-label {
-    @apply text-[10.5px] font-medium uppercase tracking-[0.16em];
+    @apply text-[11px] font-medium uppercase tracking-[0.14em];
     color: hsl(var(--text-muted));
   }
-
   .panel-title {
-    @apply text-[13px] font-semibold tracking-tight;
+    @apply text-[15px] font-semibold tracking-tight;
     color: hsl(var(--text-strong));
   }
-
   .num {
-    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.02em;
   }
 
-  /* faint dotted/grid backdrop for content areas */
-  .grid-bg {
-    background-size: 40px 40px;
-    background-image:
-      linear-gradient(hsl(var(--hairline) / 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--hairline) / 0.04) 1px, transparent 1px);
+  /* Organic aurora mesh — used behind hero */
+  .mesh {
+    background:
+      radial-gradient(40% 50% at 12% 8%, hsl(var(--primary) / 0.16), transparent 70%),
+      radial-gradient(38% 46% at 88% 0%, hsl(var(--secondary) / 0.14), transparent 70%),
+      radial-gradient(46% 56% at 78% 92%, hsl(var(--accent) / 0.12), transparent 72%),
+      radial-gradient(40% 50% at 0% 90%, hsl(var(--highlight) / 0.12), transparent 72%);
   }
 
-  /* shimmer used by skeletons */
   .shimmer {
     position: relative;
     overflow: hidden;
-    background: hsl(var(--surface-3) / 0.5);
+    background: hsl(var(--surface-1));
   }
   .shimmer::after {
     content: "";
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.06), transparent);
+    background: linear-gradient(90deg, transparent, hsl(var(--hairline) / 0.06), transparent);
     animation: shimmer 1.8s infinite;
   }
 }
 
 @keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
+  100% { transform: translateX(100%); }
 }
 
-/* map marker pulse (used by Leaflet divIcon) */
-@keyframes ngpulse {
-  0% { transform: scale(0.7); opacity: 0.8; }
-  100% { transform: scale(1.8); opacity: 0; }
+/* dotted backdrop for content areas */
+.dot-bg {
+  background-image: radial-gradient(hsl(var(--hairline) / 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
-/* ── Threat helpers ────────────────────────────────────────────────────── */
+/* ── Risk helpers ──────────────────────────────────────────────────────── */
 .t-safe { color: hsl(var(--t-safe)); }
 .t-low { color: hsl(var(--t-low)); }
 .t-medium { color: hsl(var(--t-medium)); }
@@ -171,26 +156,9 @@ body {
 ::-webkit-scrollbar { width: 9px; height: 9px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--hairline) / 0.18);
+  background: hsl(var(--hairline) / 0.16);
   border-radius: 99px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background: hsl(var(--hairline) / 0.32); background-clip: padding-box; }
-
-/* ── Leaflet dark theming ──────────────────────────────────────────────── */
-.leaflet-container { background: hsl(var(--surface-1)) !important; font-family: var(--font-sans); }
-.leaflet-tile {
-  filter: grayscale(1) brightness(0.55) invert(0.92) contrast(0.9) hue-rotate(175deg) saturate(0.7);
-}
-.leaflet-control-attribution {
-  background: hsl(var(--surface-0) / 0.7) !important;
-  color: hsl(var(--text-faint)) !important;
-  backdrop-filter: blur(8px);
-}
-.leaflet-control-attribution a { color: hsl(var(--text-muted)) !important; }
-.leaflet-control-zoom a {
-  background: hsl(var(--surface-2)) !important;
-  color: hsl(var(--text)) !important;
-  border-color: hsl(var(--hairline) / 0.15) !important;
-}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--hairline) / 0.28); background-clip: padding-box; }

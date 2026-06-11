@@ -1,41 +1,35 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-import "leaflet/dist/leaflet.css";
-import { AnimatedBackground } from "@/components/shell/AnimatedBackground";
+import { Providers } from "@/components/shell/Providers";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { Topbar } from "@/components/shell/Topbar";
-import { Providers } from "@/components/shell/Providers";
-import { CommandPalette } from "@/components/shell/CommandPalette";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono-jb",
-  display: "swap",
-});
+import { AnimatedBackground } from "@/components/shell/AnimatedBackground";
 
 export const metadata: Metadata = {
-  title: "NightGuard — Security Intelligence",
-  description: "Intelligent Campus Night Security — Security Operations Center",
+  title: "NightGuard — Safest Route, Intelligently",
+  description:
+    "An intelligent route safety recommendation platform powered by real-time IoT sensor nodes. Find the safest path between any two places.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f4ee",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${mono.variable}`}>
-      <body>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="bg-canvas">
         <Providers>
           <AnimatedBackground />
-          <CommandPalette />
-          <div className="min-h-screen">
+          <div className="relative flex min-h-screen">
             <Sidebar />
-            <div className="lg:pl-[248px]">
+            <div className="flex min-w-0 flex-1 flex-col lg:pl-[256px]">
               <Topbar />
-              <div className="grid-bg min-h-[calc(100vh-64px)]">{children}</div>
+              <main className="dot-bg min-h-[calc(100vh-72px)] flex-1">{children}</main>
             </div>
           </div>
         </Providers>

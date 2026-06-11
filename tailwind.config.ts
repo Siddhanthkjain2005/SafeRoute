@@ -3,7 +3,6 @@ import type { Config } from "tailwindcss";
 const hsl = (v: string) => `hsl(var(${v}) / <alpha-value>)`;
 
 const config: Config = {
-  darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -12,20 +11,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        canvas: hsl("--canvas"),
         surface: {
           0: hsl("--surface-0"),
           1: hsl("--surface-1"),
           2: hsl("--surface-2"),
-          3: hsl("--surface-3"),
         },
         hairline: hsl("--hairline"),
-        accent: {
-          DEFAULT: hsl("--accent"),
-          cyan: hsl("--accent-2"),
-          purple: hsl("--accent-3"),
-          amber: hsl("--accent-amber"),
-          red: hsl("--accent-red"),
+        primary: {
+          DEFAULT: hsl("--primary"),
+          soft: hsl("--primary-soft"),
         },
+        secondary: hsl("--secondary"),
+        accent: hsl("--accent"),
+        highlight: hsl("--highlight"),
         threat: {
           safe: hsl("--t-safe"),
           low: hsl("--t-low"),
@@ -48,41 +47,41 @@ const config: Config = {
         xl: "var(--r-xl)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono-jb)", "ui-monospace", "monospace"],
+        sans: ["var(--font-sans-geist)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono-geist)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px hsl(var(--accent) / 0.25), 0 8px 40px -8px hsl(var(--accent) / 0.45)",
-        "glow-soft": "0 0 30px -6px hsl(var(--accent) / 0.4)",
+        glow: "0 0 0 1px hsl(var(--primary) / 0.18), 0 18px 50px -16px hsl(var(--primary) / 0.4)",
+        soft: "0 12px 32px -16px hsl(232 38% 24% / 0.16)",
       },
       keyframes: {
-        "pulse-ring": {
-          "0%": { transform: "scale(0.85)", opacity: "0.65" },
-          "100%": { transform: "scale(2.4)", opacity: "0" },
-        },
-        sweep: { "0%": { transform: "rotate(0deg)" }, "100%": { transform: "rotate(360deg)" } },
         float: {
           "0%,100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-12px)" },
         },
-        "aurora-1": {
+        "mesh-1": {
           "0%,100%": { transform: "translate(0,0) scale(1)" },
-          "33%": { transform: "translate(8%,-6%) scale(1.15)" },
-          "66%": { transform: "translate(-6%,8%) scale(0.95)" },
+          "33%": { transform: "translate(6%,-4%) scale(1.1)" },
+          "66%": { transform: "translate(-4%,6%) scale(0.95)" },
         },
-        "aurora-2": {
-          "0%,100%": { transform: "translate(0,0) scale(1.1)" },
-          "50%": { transform: "translate(-10%,6%) scale(0.9)" },
+        "mesh-2": {
+          "0%,100%": { transform: "translate(0,0) scale(1.08)" },
+          "50%": { transform: "translate(-8%,5%) scale(0.92)" },
         },
-        scan: { "0%": { transform: "translateY(-100%)" }, "100%": { transform: "translateY(100vh)" } },
+        "dash-flow": {
+          to: { strokeDashoffset: "-24" },
+        },
+        "pulse-soft": {
+          "0%,100%": { opacity: "1" },
+          "50%": { opacity: "0.45" },
+        },
       },
       animation: {
-        "pulse-ring": "pulse-ring 2.6s cubic-bezier(0.4,0,0.6,1) infinite",
-        sweep: "sweep 4s linear infinite",
-        float: "float 6s ease-in-out infinite",
-        "aurora-1": "aurora-1 22s ease-in-out infinite",
-        "aurora-2": "aurora-2 26s ease-in-out infinite",
-        scan: "scan 8s linear infinite",
+        float: "float 8s ease-in-out infinite",
+        "mesh-1": "mesh-1 24s ease-in-out infinite",
+        "mesh-2": "mesh-2 28s ease-in-out infinite",
+        "dash-flow": "dash-flow 0.8s linear infinite",
+        "pulse-soft": "pulse-soft 2.4s ease-in-out infinite",
       },
     },
   },

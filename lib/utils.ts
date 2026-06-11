@@ -16,24 +16,23 @@ interface ThreatStyle {
 }
 
 export const THREAT_META: Record<ThreatLevel, ThreatStyle> = {
-  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/30", hex: "#1fbf7e", glow: "rgba(31,191,126,0.5)" },
-  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/30", hex: "#2f9ff0", glow: "rgba(47,159,240,0.5)" },
-  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/10", ring: "ring-threat-medium/30", hex: "#f9b21a", glow: "rgba(249,178,26,0.5)" },
-  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/10", ring: "ring-threat-high/30", hex: "#fb7a2c", glow: "rgba(251,122,44,0.5)" },
-  critical: { label: "Critical", text: "text-threat-critical", bg: "bg-threat-critical/15", ring: "ring-threat-critical/40", hex: "#ef4444", glow: "rgba(239,68,68,0.55)" },
-  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/15", ring: "ring-threat-emergency/40", hex: "#ec3f8f", glow: "rgba(236,63,143,0.55)" },
+  safe: { label: "Safe", text: "text-threat-safe", bg: "bg-threat-safe/10", ring: "ring-threat-safe/30", hex: "#1aa86a", glow: "rgba(26,168,106,0.4)" },
+  low: { label: "Low", text: "text-threat-low", bg: "bg-threat-low/10", ring: "ring-threat-low/30", hex: "#1aa7b8", glow: "rgba(26,167,184,0.4)" },
+  medium: { label: "Medium", text: "text-threat-medium", bg: "bg-threat-medium/12", ring: "ring-threat-medium/30", hex: "#f59f0a", glow: "rgba(245,159,10,0.4)" },
+  high: { label: "High", text: "text-threat-high", bg: "bg-threat-high/12", ring: "ring-threat-high/30", hex: "#ef5f3c", glow: "rgba(239,95,60,0.45)" },
+  critical: { label: "Critical", text: "text-threat-critical", bg: "bg-threat-critical/12", ring: "ring-threat-critical/40", hex: "#e11d48", glow: "rgba(225,29,72,0.5)" },
+  emergency: { label: "Emergency", text: "text-threat-emergency", bg: "bg-threat-emergency/12", ring: "ring-threat-emergency/40", hex: "#db2777", glow: "rgba(219,39,119,0.5)" },
 };
 
 export function threatMeta(level: ThreatLevel): ThreatStyle {
   return THREAT_META[level] ?? THREAT_META.safe;
 }
 
-export const ACCENT = {
-  blue: "#5b8cff",
-  cyan: "#22d3ee",
-  purple: "#a78bfa",
-  amber: "#f9b21a",
-  red: "#ef4444",
+export const BRAND = {
+  primary: "#4338ca", // deep indigo
+  secondary: "#0d8de6", // ocean blue
+  accent: "#1aaf9c", // teal
+  highlight: "#8b5cf6", // soft violet
 };
 
 export function levelFromScore(score: number): ThreatLevel {
